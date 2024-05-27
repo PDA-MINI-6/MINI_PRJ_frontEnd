@@ -1,4 +1,5 @@
 import { createContext, useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const naverMapContext = createContext();
 
@@ -7,6 +8,7 @@ export default function NaverMapProvider({ children }) {
   let markers = useRef([]);
   const _map = useRef();
   let clickedMarker = useRef();
+  const navigate = useNavigate();
 
   const initMap = useCallback((el) => {
     if (ready.current) return;
@@ -43,6 +45,7 @@ export default function NaverMapProvider({ children }) {
       });
 
       window.naver.maps.Event.addListener(marker, "click", () => {
+        navigate(`/${d.id}`);
         _map.current.panTo(marker.position, {
           duration: 500,
           easing: "linear",

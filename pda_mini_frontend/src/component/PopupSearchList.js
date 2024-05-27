@@ -9,7 +9,7 @@ import "./popupSearch.css";
 const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
-  const { initMarker, initMap } = useContext(naverMapContext);
+  const { initMarker, initMap, moveMap } = useContext(naverMapContext);
 
   useEffect(() => {
     axios
@@ -47,7 +47,10 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
               as="li"
               className="d-flex justify-content-between align-items-start"
               style={{ cursor: "pointer" }}
-              onClick={() => navigate(`/${elem.id}`)}
+              onClick={() => {
+                moveMap(elem.location);
+                navigate(`/${elem.id}`);
+              }}
             >
               <div>
                 <img
