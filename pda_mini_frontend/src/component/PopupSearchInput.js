@@ -3,12 +3,6 @@ import { IoSearchSharp } from "react-icons/io5";
 import "./popupSearch.css";
 
 const PopupSearchInput = (props) => {
-  const activeEnter = (e) => {
-    if (e.key === "Enter") {
-      // 엔터키 눌렀을 때 이벤트
-    }
-  };
-
   return (
     <div>
       <div class="search-bar">
@@ -20,7 +14,6 @@ const PopupSearchInput = (props) => {
           onChange={(e) => {
             props.setSearchText(e.target.value);
           }}
-          onKeyDown={(e) => activeEnter(e)}
         />
       </div>
     </div>
