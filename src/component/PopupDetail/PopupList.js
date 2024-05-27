@@ -14,15 +14,15 @@ export default function PopupList() {
       <dl className="details-grid">
         <div className="detail-item">
           <dt className="detail-title">title</dt>
-          <dd className="detail-content">Margot Foster</dd>
+          <dd className="detail-content">Master</dd>
         </div>
         <div className="detail-item">
           <dt className="detail-title">subtitle</dt>
-          <dd className="detail-content">Backend Developer</dd>
+          <dd className="detail-content">Bacper</dd>
         </div>
         <div className="detail-item">
           <dt className="detail-title">stardate</dt>
-          <dd className="detail-content">margotfoster@example.com</dd>
+          <dd className="detail-content">margotfoster@em</dd>
         </div>
         <div className="detail-item">
           <dt className="detail-title">enddate</dt>
