@@ -1,5 +1,6 @@
 import React from "react";
 import { MDBCard, MDBCardBody, MDBCardImage } from "mdb-react-ui-kit";
+import { TiDeleteOutline } from "react-icons/ti";
 
 const CommentItem = props => {
   function timeAgo(dateString) {
@@ -29,9 +30,14 @@ const CommentItem = props => {
   }
 
   return (
-    <MDBCard className="mb-4">
+    <MDBCard
+      className="mb-4"
+      style={{ height: "80px", display: "flex", justifyContent: "center" }}>
       <MDBCardBody>
-        <p>{props.content}</p>
+        <div className="d-flex justify-content-between">
+          <p>{props.content}</p>
+          <TiDeleteOutline size="20px" style={{ cursor: "pointer" }} />
+        </div>
 
         <div className="d-flex justify-content-between">
           <div className="d-flex flex-row align-items-center">

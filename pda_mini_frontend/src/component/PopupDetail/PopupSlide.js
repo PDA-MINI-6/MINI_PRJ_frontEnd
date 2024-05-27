@@ -13,7 +13,7 @@ export default function PopupSlide() {
 
   return (
     <div>
-      <Carousel fade>
+      <Carousel>
         <Carousel.Item>
           <Image
             src={ExampleCarouselImage}
