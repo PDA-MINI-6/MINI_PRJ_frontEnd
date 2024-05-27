@@ -1,15 +1,21 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 export default function PopupLikecnt() {
-  const [like, setLike] = useState(0);
+  const [like, setLike] = useState(1);
   const [isClick, setIsClick] = useState(true);
+
+  useEffect(() => {
+    const storedLikeCount = localStorage.getItem(`like`);
+    console.log(storedLikeCount);
+    if (storedLikeCount !== null) setIsClick(storedLikeCount);
+  }, [like]);
 
   return (
     <div className="like">
       <h3>
-        {isClick ? (
+        {isClick === "false" ? (
           <div
             style={{
               display: "flex",
@@ -20,6 +26,7 @@ export default function PopupLikecnt() {
               onClick={() => {
                 setLike(like + 1);
                 setIsClick(false);
+                localStorage.setItem(`like`, true);
               }}
               style={{ cursor: "pointer", marginRight: "8px" }}
             >
@@ -38,6 +45,7 @@ export default function PopupLikecnt() {
               onClick={() => {
                 setLike(like - 1);
                 setIsClick(true);
+                localStorage.setItem(`like`, false);
               }}
               style={{ cursor: "pointer", marginRight: "8px" }}
             >
