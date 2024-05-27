@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import axios from "axios";
 
-const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
-  const [liked, setLiked] = useState(initialLiked); // 좋아요 눌렀는지 여부
-  const [likes, setLikes] = useState(initialLikes); // 좋아요 수
+const PopupSearchLiked = ({
+  initialLiked,
+  initialLikes,
+  id,
+  onLikesChange,
+}) => {
+  const [liked, setLiked] = useState(initialLiked);
+  const [likes, setLikes] = useState(initialLikes);
 
   useEffect(() => {
     const likedStatus = localStorage.getItem(`liked_${id}`);
@@ -23,15 +28,22 @@ const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
 
   const onLike = (e) => {
     e.stopPropagation();
-    if (!liked) {
-      setLiked(true);
-      setLikes(likes + 1);
-      localStorage.setItem(`liked_${id}`, true);
-    } else {
-      setLiked(false);
-      setLikes(likes - 1);
-      localStorage.setItem(`liked_${id}`, false);
-    }
+    const newLiked = !liked;
+    const newLikes = newLiked ? likes + 1 : likes - 1;
+
+    setLiked(newLiked);
+    setLikes(newLikes);
+    localStorage.setItem(`liked_${id}`, newLiked);
+    onLikesChange(id, newLikes);
+
+    axios
+      .post("http://localhost:3000/data/like", { id, liked: newLiked })
+      .then((response) => {
+        console.log("Successfully updated like status");
+      })
+      .catch((error) => {
+        console.error("Error updating like status:", error);
+      });
   };
 
   return (
