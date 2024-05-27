@@ -24,10 +24,37 @@ input:focus {
 .custom-select {
   border: none;
   width: 6em;
-  margin: 10px 0;
+  margin: 10px 0 20px 0;
   font-size: 13px;
   font-weight: bold;
 }
 .custom-select:focus {
   outline: none;
+}
+.parent {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 부모 요소의 높이를 100vh로 설정 */
+}
+#container {
+  height: auto;
+  overflow: scroll;
+  flex-grow: 1;
+  margin-top: 10px;
+}
+#container::-webkit-scrollbar {
+  width: 5px;
+}
+#container::-webkit-scrollbar-thumb {
+  /* 스크롤바의 길이 */
+  height: 20%;
+  background-color: #c2c0c0;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 0px solid transparent;
+}
+#container::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }
