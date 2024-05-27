@@ -1,0 +1,33 @@
+.search-bar {
+  width: 100%;
+  border: 1px solid #adadad;
+  border-radius: 10px;
+  height: 40px;
+  padding: 5px;
+}
+input {
+  border: none;
+  width: 85%;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+}
+input:focus {
+  outline: none;
+}
+.search-select {
+  display: flex;
+  justify-content: right;
+}
+.custom-select {
+  border: none;
+  width: 6em;
+  margin: 10px 0;
+  font-size: 13px;
+  font-weight: bold;
+}
+.custom-select:focus {
+  outline: none;
+}
