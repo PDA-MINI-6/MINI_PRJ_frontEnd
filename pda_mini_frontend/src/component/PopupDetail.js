@@ -1,6 +1,7 @@
 import React from "react";
 import PopupDetailComment from "./PopupDetailComment/PopupDetailComment";
 import { Container, Row } from "react-bootstrap";
+import Root from "./PopupDetail/Root";
 
 const PopupDetail = () => {
   return (
@@ -8,6 +9,7 @@ const PopupDetail = () => {
       <Container>
         <Row></Row>
         <Row>
+          <Root />
           <PopupDetailComment />
         </Row>
       </Container>
