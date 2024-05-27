@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 export default function PopupLikecnt() {
   const [like, setLike] = useState(0);
@@ -22,7 +23,7 @@ export default function PopupLikecnt() {
               }}
               style={{ cursor: "pointer", marginRight: "8px" }}
             >
-              🤍
+              <FaRegHeart />
             </span>
             <span style={{ cursor: "default" }}>{like}</span>
           </div>
@@ -40,7 +41,7 @@ export default function PopupLikecnt() {
               }}
               style={{ cursor: "pointer", marginRight: "8px" }}
             >
-              🧡
+              <FaHeart color="red" />
             </span>
             <span style={{ cursor: "default" }}>{like}</span>
           </div>
