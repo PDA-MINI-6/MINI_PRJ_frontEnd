@@ -1,7 +1,7 @@
 import React from "react";
 
 const PopupMap = () => {
-  return <div></div>;
+  return <div>map</div>;
 };
 
 export default PopupMap;
