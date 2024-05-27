@@ -14,7 +14,7 @@ export default function PopupSlide() {
   return (
     <div>
       <Carousel fade>
-        <Carousel.Item>
+        <Carousel.Item pause="false">
           <Image
             src={ExampleCarouselImage}
             alt="First slide"

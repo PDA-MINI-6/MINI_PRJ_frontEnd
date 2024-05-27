@@ -12,18 +12,38 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
   const { initMarker, initMap, moveMap } = useContext(naverMapContext);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/data/mock-data.json`)
-      .then((response) => {
-        setSearchList(response.data);
-
-        initMap();
-        initMarker(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const localData = localStorage.getItem("searchList");
+    if (localData) {
+      const parsedData = JSON.parse(localData);
+      setSearchList(parsedData);
+      initMap();
+      initMarker(parsedData);
+    } else {
+      axios
+        .get(`http://localhost:3000/data/mock-data.json`)
+        .then((response) => {
+          setSearchList(response.data);
+          localStorage.setItem("searchList", JSON.stringify(response.data));
+          initMap();
+          initMarker(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }, []);
+
+  const handleLikesChange = (id, newLikes) => {
+    const updatedList = searchList.map((item) => {
+      if (item.id === id) {
+        return { ...item, liked: newLikes };
+      }
+      return item;
+    });
+
+    setSearchList(updatedList);
+    localStorage.setItem("searchList", JSON.stringify(updatedList));
+  };
 
   const sortedList = [...searchList].sort((a, b) => {
     if (sortOption === "1") {
@@ -62,7 +82,7 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                   }}
                 />
               </div>
-              <div className="ms-2 me-auto">
+              <div className="ms-2 me-auto d-flex flex-column justify-content-center">
                 <div className="fw-bold" style={{ margin: "2px 0" }}>
                   {elem.title}
                 </div>
@@ -77,6 +97,7 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                 }
                 initialLikes={elem.liked}
                 id={elem.id}
+                onLikesChange={handleLikesChange}
               />
             </ListGroup.Item>
           ) : null;
