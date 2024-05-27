@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PopupSearchLiked from "./PopupSearchLiked";
+import { naverMapContext } from "./NaverMapProvider";
 
 const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
+  const { initMarker, initMap } = useContext(naverMapContext);
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/data/mock-data.json`)
       .then((response) => {
-        //console.log(response);
         setSearchList(response.data);
+
+        initMap();
+        initMarker(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

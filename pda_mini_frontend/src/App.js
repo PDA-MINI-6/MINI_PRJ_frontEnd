@@ -19,7 +19,7 @@ function App() {
                 <Route path="/:id" element={<PopupDetail />} />
               </Routes>
             </Col>
-            <Col xs={6} sm={6}>
+            <Col xs={6} sm={6} style={{ height: "100vh" }}>
               <PopupMap />
             </Col>
           </Row>
