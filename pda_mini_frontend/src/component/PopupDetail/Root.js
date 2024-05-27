@@ -26,10 +26,10 @@ export default function Root() {
       </a>
       {/* <button className="back-button">뒤로 가기</button> */}
       <div className="root">
-        <PopupSlide></PopupSlide>
-        <PopupLikecnt></PopupLikecnt>
-        <PopupList></PopupList>
-        <PopupTag></PopupTag>
+        <PopupSlide />
+        <PopupLikecnt />
+        <PopupList />
+        <PopupTag />
       </div>
     </>
   );

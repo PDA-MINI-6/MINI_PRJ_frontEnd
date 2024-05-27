@@ -9,25 +9,41 @@ export default function PopupLikecnt() {
     <div className="like">
       <h3>
         {isClick ? (
-          <span
-            onClick={() => {
-              setLike(like + 1);
-              setIsClick(false);
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
             }}
-            style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            🤍 {like}
-          </span>
+            <span
+              onClick={() => {
+                setLike(like + 1);
+                setIsClick(false);
+              }}
+              style={{ cursor: "pointer", marginRight: "8px" }}
+            >
+              🤍
+            </span>
+            {like}
+          </div>
         ) : (
-          <span
-            onClick={() => {
-              setLike(like - 1);
-              setIsClick(true);
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
             }}
-            style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            🧡 {like}
-          </span>
+            <span
+              onClick={() => {
+                setLike(like - 1);
+                setIsClick(true);
+              }}
+              style={{ cursor: "pointer", marginRight: "8px" }}
+            >
+              🧡
+            </span>
+            {` ${like}`}
+          </div>
         )}
       </h3>
     </div>
