@@ -45,7 +45,7 @@ export default function PopupLikecnt() {
               onClick={() => {
                 setLike(like - 1);
                 setIsClick(true);
-                localStorage.setItem(`like`, false);
+                localStorage.setItem(`like`, false); //localstorage
               }}
               style={{ cursor: "pointer", marginRight: "8px" }}
             >
