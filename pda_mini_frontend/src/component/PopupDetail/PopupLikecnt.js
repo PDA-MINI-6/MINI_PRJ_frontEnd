@@ -24,7 +24,7 @@ export default function PopupLikecnt() {
             >
               🤍
             </span>
-            {like}
+            <span style={{ cursor: "default" }}>{like}</span>
           </div>
         ) : (
           <div
@@ -42,7 +42,7 @@ export default function PopupLikecnt() {
             >
               🧡
             </span>
-            {` ${like}`}
+            <span style={{ cursor: "default" }}>{like}</span>
           </div>
         )}
       </h3>
