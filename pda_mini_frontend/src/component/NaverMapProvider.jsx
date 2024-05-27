@@ -32,6 +32,18 @@ export default function NaverMapProvider({ children }) {
 
   const moveMap = useCallback((newCenter) => {
     _map.current.updateBy(newCenter, 16);
+    markers.map((m, idx) => {
+      if (
+        m.position._lat === newCenter.lat &&
+        m.position._lng === newCenter.lng
+      ) {
+        if (clickedMarker.current) {
+          clickedMarker.current.setAnimation(null);
+        }
+        clickedMarker.current = m;
+        clickedMarker.current.setAnimation(1);
+      }
+    });
   }, []);
 
   const initMarker = (data) => {
