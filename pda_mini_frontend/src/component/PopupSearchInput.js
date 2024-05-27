@@ -5,7 +5,7 @@ import "./popupSearch.css";
 const PopupSearchInput = (props) => {
   return (
     <div>
-      <div class="search-bar">
+      <div className="search-bar">
         <IoSearchSharp size={"22px"} />
         <input
           placeholder="검색"

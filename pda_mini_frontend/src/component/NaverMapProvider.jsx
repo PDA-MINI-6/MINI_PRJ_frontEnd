@@ -3,14 +3,16 @@ import { createContext, useState, useCallback, useRef } from "react";
 export const naverMapContext = createContext();
 
 export default function NaverMapProvider({ children }) {
-  const [ready, setReady] = useState(false);
+  let ready = useRef(false);
   let markers = useRef([]);
   const _map = useRef();
   let clickedMarker = useRef();
 
   const initMap = useCallback((el) => {
-    setReady(true);
-    const map = new window.naver.maps.Map(el, {
+    if (ready.current) return;
+    console.log("init map");
+    ready.current = true;
+    const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
       center: {
         lat: 37.559771,
         lng: 126.942367,
@@ -20,10 +22,10 @@ export default function NaverMapProvider({ children }) {
     });
     _map.current = map;
 
-    markers = markers.map((m) => {
-      m.setMap(_map.current);
-      return m;
-    });
+    // markers = markers.map((m) => {
+    //   m.setMap(_map.current);
+    //   return m;
+    // });
   }, []);
 
   const moveMap = useCallback((newCenter) => {

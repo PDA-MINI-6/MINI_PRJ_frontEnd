@@ -11,7 +11,7 @@ const PopupSearch = (isClicked) => {
   return (
     <div>
       <PopupSearchInput searchText={searchText} setSearchText={setSearchText} />
-      <div class="search-select">
+      <div className="search-select">
         <PopupSearchSelect setSortOption={setSortOption} />
       </div>
       <PopupSearchList
