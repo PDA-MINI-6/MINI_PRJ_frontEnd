@@ -13,7 +13,7 @@ export default function Root({ popupData }) {
         <PopupLikecnt like={popupData.liked} />
         <PopupList
           title={popupData.title}
-          subtitle={popupData.subtitle}
+          address={popupData.address}
           startDate={popupData.startDate}
           endDate={popupData.endDate}
           content={popupData.content}

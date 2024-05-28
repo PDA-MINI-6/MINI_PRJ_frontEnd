@@ -1,8 +1,9 @@
 import React from "react";
 import "./PopupList.css";
+
 export default function PopupList({
   title,
-  subtitle,
+  address,
   startDate,
   endDate,
   content,
@@ -15,8 +16,9 @@ export default function PopupList({
           <dd className="detail-content">{title}</dd>
         </div>
         <div className="detail-item">
-          <dt className="detail-title">Subtitle</dt>
-          <dd className="detail-content">{subtitle}</dd>
+          <dt className="detail-title">Address</dt>{" "}
+          {/* 'Address' with capital 'A' */}
+          <dd className="detail-content">{address}</dd>
         </div>
         <div className="detail-item">
           <dt className="detail-title">Start Date</dt>
@@ -28,7 +30,10 @@ export default function PopupList({
         </div>
         <div className="detail-item detail-item-full">
           <dt className="detail-title">Content</dt>
-          <dd className="detail-content">{content}</dd>
+          <dd
+            className="detail-content"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
         </div>
       </dl>
     </div>

@@ -13,7 +13,7 @@ export default function PopupSlide({ images }) {
                 src={image}
                 alt={`Slide ${index + 1}`}
                 fluid
-                style={{ objectFit: "cover", width: "100%", height: "450px" }}
+                style={{ objectFit: "contain", width: "100%", height: "450px" }}
               />
             </Carousel.Item>
           ))}
