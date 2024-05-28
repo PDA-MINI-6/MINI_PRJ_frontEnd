@@ -23,9 +23,9 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
         .get(`http://localhost:3000/data/mock-data.json`)
         .then((response) => {
           setSearchList(response.data);
-          localStorage.setItem("searchList", JSON.stringify(response.data));
           initMap();
           initMarker(response.data);
+          localStorage.setItem("searchList", JSON.stringify(response.data));
         })
         .catch((error) => {
           console.error("Error fetching data:", error);

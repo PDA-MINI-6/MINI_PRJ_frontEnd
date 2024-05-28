@@ -11,9 +11,13 @@ export default function NaverMapProvider({ children }) {
   const navigate = useNavigate();
 
   const initMap = useCallback((el) => {
-    if (ready.current) return;
-    console.log("init map");
+    if (ready.current) {
+      console.log("이미 맵 로드됨");
+      return;
+    }
     ready.current = true;
+
+    console.log("init map");
     const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
       center: {
         lat: 37.559771,
