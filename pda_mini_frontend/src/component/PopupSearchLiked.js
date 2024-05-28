@@ -2,48 +2,35 @@ import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import axios from "axios";
 
-const PopupSearchLiked = ({
-  initialLiked,
-  initialLikes,
-  id,
-  onLikesChange,
-}) => {
-  const [liked, setLiked] = useState(initialLiked);
-  const [likes, setLikes] = useState(initialLikes);
+const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
+  const [liked, setLiked] = useState(initialLiked); // 좋아요 눌렀는지 여부
+  const [likes, setLikes] = useState(initialLikes); // 좋아요 수
 
   useEffect(() => {
     const likedStatus = localStorage.getItem(`liked_${id}`);
     if (likedStatus !== null) setLiked(JSON.parse(likedStatus));
   }, [id]);
 
-  // useEffect(() => {
-  //   if (likes !== initialLikes) {
-  //     axios
-  //       .post(`http://localhost:3000/data/mock-data.json/update`, { id, likes })
-  //       .then((response) =>
-  //         axios.get(`http://localhost:3000/data/mock-data.json/${id}`)
-  //       );
-  //   }
-  // }, [likes, id, initialLikes]);
-
   const onLike = (e) => {
     e.stopPropagation();
-    const newLiked = !liked;
-    const newLikes = newLiked ? likes + 1 : likes - 1;
-
-    setLiked(newLiked);
-    setLikes(newLikes);
-    localStorage.setItem(`liked_${id}`, newLiked);
-    onLikesChange(id, newLikes);
-
-    axios
-      .post("http://localhost:3000/data/like", { id, liked: newLiked })
-      .then((response) => {
-        console.log("Successfully updated like status");
-      })
-      .catch((error) => {
-        console.error("Error updating like status:", error);
+    if (liked) {
+      // 이미 좋아요를 누른 상황이면
+      setLiked(false); // 좋아요 취소
+      setLikes((prev) => prev - 1);
+      axios.patch(`http://3.35.222.75:4000/popupStore/${id}/unlike`, {
+        id,
+        liked: likes,
       });
+    } else {
+      // 좋아요를 누르지 않은 상황이면
+      setLiked(true); // 좋아요
+      setLikes((prev) => prev + 1);
+      axios.patch(`http://3.35.222.75:4000/popupStore/${id}/like`, {
+        id,
+        liked: likes,
+      });
+    }
+    localStorage.setItem(`liked_${id}`, !liked);
   };
 
   return (

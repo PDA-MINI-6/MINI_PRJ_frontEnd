@@ -4,6 +4,7 @@ import Image from "react-bootstrap/Image";
 import ExampleCarouselImage from "../../img/성수.jpg";
 import ExampleCarouselImage2 from "../../img/성수첫.jpg";
 import ExampleCarouselImage3 from "../../img/성수삼.jpg";
+import "./PopupSlide.css";
 
 export default function PopupSlide() {
   const [imagedata, setImageData] = useState([]);

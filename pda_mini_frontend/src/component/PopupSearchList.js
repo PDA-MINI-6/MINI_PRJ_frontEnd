@@ -12,38 +12,18 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
   const { initMarker, initMap, moveMap } = useContext(naverMapContext);
 
   useEffect(() => {
-    const localData = localStorage.getItem("searchList");
-    if (localData) {
-      const parsedData = JSON.parse(localData);
-      setSearchList(parsedData);
-      initMap();
-      initMarker(parsedData);
-    } else {
-      axios
-        .get(`http://localhost:3000/data/mock-data.json`)
-        .then((response) => {
-          setSearchList(response.data);
-          initMap();
-          initMarker(response.data);
-          localStorage.setItem("searchList", JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
+    axios
+      .get(`http://3.35.222.75:4000/popupStore`)
+      .then((response) => {
+        setSearchList(response.data);
+        localStorage.setItem("searchList", JSON.stringify(response.data));
+        initMap();
+        initMarker(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
-
-  const handleLikesChange = (id, newLikes) => {
-    const updatedList = searchList.map((item) => {
-      if (item.id === id) {
-        return { ...item, liked: newLikes };
-      }
-      return item;
-    });
-
-    setSearchList(updatedList);
-    localStorage.setItem("searchList", JSON.stringify(updatedList));
-  };
 
   const sortedList = [...searchList].sort((a, b) => {
     if (sortOption === "1") {
@@ -60,7 +40,7 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
           return searchText === "" ||
             elem.tags.some((tag) => tag.includes(searchText)) ||
             elem.title.includes(searchText) ||
-            elem.subtitle.includes(searchText) ? (
+            elem.content.includes(searchText) ? (
             <ListGroup.Item
               key={elem.id}
               action
@@ -82,13 +62,37 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                   }}
                 />
               </div>
-              <div className="ms-2 me-auto d-flex flex-column justify-content-center">
+              <div
+                className="ms-2 me-auto d-flex flex-column justify-content-center"
+                style={{ width: "100%" }}
+              >
                 <div className="fw-bold" style={{ margin: "2px 0" }}>
                   {elem.title}
                 </div>
-                "{elem.subtitle}"
-                <div style={{ fontSize: "12px", margin: "6px" }}>
-                  {elem.startDate} ~ {elem.endDate}
+                <div className="mainTag">
+                  {elem.tags.map((tag, index) => (
+                    <span key={index} className="mainHashtag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <span style={{ fontSize: "12px", margin: "6px" }}>
+                    {elem.address}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "gray",
+                      margin: "6px",
+                    }}
+                  >
+                    {elem.startDate.substr(0, 10)} ~{" "}
+                    {elem.endDate.substr(0, 10)}
+                  </span>
                 </div>
               </div>
               <PopupSearchLiked
@@ -97,7 +101,6 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                 }
                 initialLikes={elem.liked}
                 id={elem.id}
-                onLikesChange={handleLikesChange}
               />
             </ListGroup.Item>
           ) : null;
