@@ -12,12 +12,13 @@ const PopupDetail = () => {
   const [popupData, setPopupData] = useState(null);
 
   useEffect(() => {
+    console.log("test");
     axios
       .get(`${REQUEST_URL}/${id}`)
-      .then(response => {
+      .then((response) => {
         setPopupData(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching popup detail:", error);
       });
   }, [id]);
@@ -25,9 +26,7 @@ const PopupDetail = () => {
   return (
     <>
       <Container id="detailcontainer">
-        <Row>
-          <Root popupData={popupData} />
-        </Row>
+        <Row>{popupData && <Root popupData={popupData} />}</Row>
         <Row>
           <PopupDetailComment />
         </Row>
