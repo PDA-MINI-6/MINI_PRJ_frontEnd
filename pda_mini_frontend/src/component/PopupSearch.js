@@ -4,7 +4,7 @@ import PopupSearchSelect from "./PopupSearchSelect";
 import PopupSearchList from "./PopupSearchList";
 import "./popupSearch.css";
 
-const PopupSearch = () => {
+const PopupSearch = ({ category }) => {
   const [searchText, setSearchText] = useState("");
   const [sortOption, setSortOption] = useState("1"); // 1: 최신순, 2: 인기순
 
@@ -17,7 +17,7 @@ const PopupSearch = () => {
       <PopupSearchList
         sortOption={sortOption}
         searchText={searchText}
-        setSearchText={setSearchText}
+        category={category}
       />
     </div>
   );

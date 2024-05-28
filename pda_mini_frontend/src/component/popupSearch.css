@@ -4,6 +4,7 @@
   border-radius: 10px;
   height: 40px;
   padding: 5px;
+  margin-top: 20px;
 }
 input {
   border: none;
@@ -24,7 +25,6 @@ input:focus {
 .custom-select {
   border: none;
   width: 6em;
-  margin: 10px 0 20px 0;
   font-size: 13px;
   font-weight: bold;
 }
