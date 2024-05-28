@@ -1,11 +1,13 @@
 import React from "react";
 import { Navbar } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import "./popupSearch.css";
 
 const Navigation = ({ setCategory }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isMainpage = location.pathname === "/";
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -24,10 +26,11 @@ const Navigation = ({ setCategory }) => {
           onChange={(e) => setCategory(e.target.value)}
           style={{
             fontSize: "15px",
-            cursor: "pointer",
+            cursor: isMainpage ? "pointer" : "default",
             width: "7em",
             backgroundColor: "rgba(var(--bs-dark-rgb), var(--bs-bg-opacity))",
           }}
+          disabled={!isMainpage}
         >
           <option value="0">전체</option>
           <option value="1">팝업스토어</option>
