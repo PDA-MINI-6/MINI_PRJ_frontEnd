@@ -6,7 +6,7 @@ import PopupSearchLiked from "./PopupSearchLiked";
 import { naverMapContext } from "./NaverMapProvider";
 import "./popupSearch.css";
 
-const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
+const PopupSearchList = ({ sortOption, searchText, category }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
   const { initMarker, initMap, moveMap } = useContext(naverMapContext);
@@ -33,9 +33,15 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
     }
   });
 
+  const filteredList =
+    category === 0
+      ? sortedList
+      : sortedList.filter((elem) => elem.category === category);
+
   return (
     <div id="container">
       <ListGroup as="ol">
+        {/* 추후 filteredList로 바꿀 예정 */}
         {sortedList.map((elem) => {
           return searchText === "" ||
             elem.tags.some((tag) => tag.includes(searchText)) ||
@@ -70,11 +76,14 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                   {elem.title}
                 </div>
                 <div className="mainTag">
-                  {elem.tags.map((tag, index) => (
-                    <span key={index} className="mainHashtag">
-                      {tag}
-                    </span>
-                  ))}
+                  {elem.tags.map(
+                    (tag, index) =>
+                      tag.trim() !== "" && (
+                        <span key={index} className="mainHashtag">
+                          {tag.trim()}
+                        </span>
+                      )
+                  )}
                 </div>
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
