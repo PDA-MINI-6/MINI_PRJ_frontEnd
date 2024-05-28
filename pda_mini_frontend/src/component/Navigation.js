@@ -51,9 +51,15 @@ const Navigation = ({ setCategory }) => {
           <AiFillHome
             color="white"
             size="20px"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", paddingBottom: "3px" }}
             onClick={() => navigate("/")}
           />
+          <span
+            style={{ color: "white", marginLeft: "3px", cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          >
+            HOME
+          </span>
         </div>
       </div>
     </Navbar>
