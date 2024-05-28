@@ -40,7 +40,7 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
           return searchText === "" ||
             elem.tags.some((tag) => tag.includes(searchText)) ||
             elem.title.includes(searchText) ||
-            elem.subtitle.includes(searchText) ? (
+            elem.content.includes(searchText) ? (
             <ListGroup.Item
               key={elem.id}
               action
@@ -62,13 +62,37 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                   }}
                 />
               </div>
-              <div className="ms-2 me-auto d-flex flex-column justify-content-center">
+              <div
+                className="ms-2 me-auto d-flex flex-column justify-content-center"
+                style={{ width: "100%" }}
+              >
                 <div className="fw-bold" style={{ margin: "2px 0" }}>
                   {elem.title}
                 </div>
-                "{elem.subtitle}"
-                <div style={{ fontSize: "12px", margin: "6px" }}>
-                  {elem.startDate} ~ {elem.endDate}
+                <div className="mainTag">
+                  {elem.tags.map((tag, index) => (
+                    <span key={index} className="mainHashtag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <span style={{ fontSize: "12px", margin: "6px" }}>
+                    {elem.address}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "gray",
+                      margin: "6px",
+                    }}
+                  >
+                    {elem.startDate.substr(0, 10)} ~{" "}
+                    {elem.endDate.substr(0, 10)}
+                  </span>
                 </div>
               </div>
               <PopupSearchLiked
@@ -77,7 +101,6 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                 }
                 initialLikes={elem.liked}
                 id={elem.id}
-                //onLikesChange={handleLikesChange}
               />
             </ListGroup.Item>
           ) : null;
