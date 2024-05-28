@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { AiFillHome } from "react-icons/ai";
 import "./popupSearch.css";
 
 const Navigation = ({ setCategory }) => {
@@ -46,7 +47,14 @@ const Navigation = ({ setCategory }) => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <div style={{ width: "7em" }} />
+        <div style={{ width: "7em" }}>
+          <AiFillHome
+            color="white"
+            size="20px"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          />
+        </div>
       </div>
     </Navbar>
   );
