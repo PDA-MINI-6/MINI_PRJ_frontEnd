@@ -27,6 +27,7 @@ export default function Root({ popupData }) {
             conti={popupData.content}
           />
         ) : (
+          //레스토랑 카테코리일 경우
           <PopupList2
             title={popupData.title}
             address={popupData.address}
