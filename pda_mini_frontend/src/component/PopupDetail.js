@@ -20,9 +20,9 @@ const PopupDetail = () => {
   useEffect(() => {
     axios
       .get(`${REQUEST_URL}/${id}`)
-      .then(response => {
+      .then((response) => {
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         setPropData(data); // propdata를 설정합니다.
         if (data.category === "popup") {
           setPopupData(data);
@@ -32,7 +32,7 @@ const PopupDetail = () => {
           setCafeData(data);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching popup detail:", error);
       });
 

@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-export default function PopupLikecnt({ liked }) {
-  const [like, setLike] = useState(liked);
+export default function PopupLikecnt(liked) {
+  console.log(liked);
+  const [like, setLike] = useState("0");
   const [isClick, setIsClick] = useState(true);
 
   useEffect(() => {
     const storedLikeCount = localStorage.getItem("likeCount");
     const storedIsClick = localStorage.getItem("isClick");
-    if (storedLikeCount !== null) {
-      setLike(parseInt(storedLikeCount, 10));
-    } else {
-      setLike(liked); // Set initial like count from prop
+    // setLike(liked);
+
+    // if (storedLikeCount !== null) {
+    //   setLike(storedLikeCount);
+    //   // setLike(parseInt(storedLikeCount, 10));
+    // } else
+
+    if (liked !== null) {
+      setLike(liked["like"]);
     }
+
     if (storedIsClick !== null) {
       setIsClick(storedIsClick === "true");
     }
-  }, [liked]); // Only re-run effect if liked prop changes
+  }, []); // Only re-run effect if liked prop changes
 
   const handleLikeClick = () => {
     if (isClick) {
