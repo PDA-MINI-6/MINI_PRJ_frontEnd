@@ -8,6 +8,7 @@ const PopupSearchInput = (props) => {
       <div className="search-bar">
         <IoSearchSharp size={"22px"} />
         <input
+          className="search-input"
           placeholder="검색"
           type="text"
           value={props.searchText}
