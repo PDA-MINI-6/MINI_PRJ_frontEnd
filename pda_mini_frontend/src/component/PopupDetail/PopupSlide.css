@@ -1,0 +1,18 @@
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: black;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  background-color: black;
+}
+
+.carousel-control-next:focus,
+.carousel-control-next:hover,
+.carousel-control-prev:focus,
+.carousel-control-prev:hover {
+  /* color: unset !important; */
+  background-color: transparent;
+  text-decoration: none;
+}

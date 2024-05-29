@@ -4,6 +4,7 @@
   border-radius: 10px;
   height: 40px;
   padding: 5px;
+  margin-top: 20px;
 }
 input {
   border: none;
@@ -24,7 +25,6 @@ input:focus {
 .custom-select {
   border: none;
   width: 6em;
-  margin: 10px 0 20px 0;
   font-size: 13px;
   font-weight: bold;
 }
@@ -57,4 +57,19 @@ input:focus {
   background-color: white;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px white;
+}
+.mainTag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.mainHashtag {
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
 }
