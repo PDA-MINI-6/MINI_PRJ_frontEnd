@@ -46,14 +46,21 @@ const PopupDetail = () => {
     return null;
   };
 
+  const renderComment = () => {
+    if (popupData) {
+      return <PopupDetailComment popupData={popupData} id={id} />;
+    } else if (foodData) {
+      return <PopupDetailComment popupData={foodData} id={id} />;
+    } else if (cafeData) {
+      return <PopupDetailComment popupData={cafeData} id={id} />;
+    }
+    return null;
+  };
+
   return (
     <Container id="detailcontainer">
       <Row>{renderRoot()}</Row>
-      <Row>
-        {popupData ? (
-          <PopupDetailComment popupData={popupData} id={id} />
-        ) : null}
-      </Row>
+      <Row>{renderComment()}</Row>
     </Container>
   );
 };
