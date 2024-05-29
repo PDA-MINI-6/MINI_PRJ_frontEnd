@@ -1,6 +1,5 @@
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  background-color: black;
+.carousel-item {
+  background-color: gray;
 }
 
 .carousel-control-next,
