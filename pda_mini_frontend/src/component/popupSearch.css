@@ -31,9 +31,9 @@ input:focus {
   align-items: center;
   margin: 10px 0 0 6px;
   font-weight: 600;
+  cursor: pointer;
 }
 .mylike-check {
-  cursor: pointer;
   margin-bottom: 4px;
 }
 .mylike-text {
