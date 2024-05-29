@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./PopupDetailComment.css";
-import axios from "axios";
 import {
   MDBCard,
   MDBCardBody,
   MDBCol,
   MDBContainer,
-  MDBTextArea,
   MDBRow,
-  MDBInput,
-  MDBBtn,
 } from "mdb-react-ui-kit";
 import CommentItem from "./CommentItem";
+import CommentInput from "./CommentInput";
 
-const PopupDetailComment = () => {
+const PopupDetailComment = props => {
   const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
-    const fetchCommentList = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/data/mock-data.json"
-        );
-        setCommentList(response.data[0].comments);
-      } catch (error) {
-        console.error("Error fetching commentList:", error);
-      }
-    };
+    const commentData = props.popupData.Comments;
 
-    fetchCommentList();
+    const sortedComments = commentData.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    setCommentList(sortedComments);
   }, []);
 
   return (
@@ -41,43 +32,18 @@ const PopupDetailComment = () => {
                 className="shadow-0 border"
                 style={{ backgroundColor: "#ffffff" }}>
                 <MDBCardBody>
-                  <MDBTextArea
-                    placeholder="댓글을 입력해주세요."
-                    id="textAreaExample"
-                    rows="{1}"
-                    style={{ height: "10px", marginBottom: "10px" }}
+                  {/* input item */}
+                  <CommentInput
+                    popupDataId={props.popupData.id}
+                    setCommentList={setCommentList}
                   />
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                      marginBottom: "10px",
-                    }}>
-                    <MDBInput
-                      id="formControlSm"
-                      placeholder="작성자"
-                      type="text"
-                      size="sm"
-                      style={{ width: "100%" }}
-                    />
-                    <MDBBtn
-                      color="secondary"
-                      noRipple="false"
-                      style={{
-                        display: "flex",
-                        height: "30px",
-                        alignItems: "center",
-                      }}>
-                      작성하기
-                    </MDBBtn>
-                  </div>
-
                   {/* list item */}
                   {commentList.map(comment => (
                     <CommentItem
-                      key={comment.id}
+                      key={comment._id}
+                      commentId={comment._id}
+                      popupDataId={props.popupData.id}
+                      setCommentList={setCommentList}
                       author={comment.author}
                       content={comment.content}
                       createdAt={comment.createdAt}

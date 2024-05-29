@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import axios from "axios";
+import { REQUEST_URL } from "../constant";
 
 const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
   const [liked, setLiked] = useState(initialLiked); // 좋아요 눌렀는지 여부
@@ -17,7 +18,7 @@ const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
       // 이미 좋아요를 누른 상황이면
       setLiked(false); // 좋아요 취소
       setLikes((prev) => prev - 1);
-      axios.patch(`http://3.35.222.75:4000/popupStore/${id}/unlike`, {
+      axios.patch(`${REQUEST_URL}/${id}/unlike`, {
         id,
         liked: likes,
       });
@@ -25,7 +26,7 @@ const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
       // 좋아요를 누르지 않은 상황이면
       setLiked(true); // 좋아요
       setLikes((prev) => prev + 1);
-      axios.patch(`http://3.35.222.75:4000/popupStore/${id}/like`, {
+      axios.patch(`${REQUEST_URL}/${id}/like`, {
         id,
         liked: likes,
       });

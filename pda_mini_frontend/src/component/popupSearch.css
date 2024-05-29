@@ -34,7 +34,7 @@ input:focus {
 .parent {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 부모 요소의 높이를 100vh로 설정 */
+  height: 91vh;
 }
 #container {
   height: auto;

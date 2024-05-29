@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PopupSearchLiked from "./PopupSearchLiked";
 import { naverMapContext } from "./NaverMapProvider";
+import { REQUEST_URL } from "../constant";
 import "./popupSearch.css";
 
 const PopupSearchList = ({ sortOption, searchText, category }) => {
@@ -13,7 +14,7 @@ const PopupSearchList = ({ sortOption, searchText, category }) => {
 
   useEffect(() => {
     axios
-      .get(`http://3.35.222.75:4000/popupStore`)
+      .get(`${REQUEST_URL}`)
       .then((response) => {
         setSearchList(response.data);
         localStorage.setItem("searchList", JSON.stringify(response.data));
@@ -34,15 +35,14 @@ const PopupSearchList = ({ sortOption, searchText, category }) => {
   });
 
   const filteredList =
-    category === 0
+    category === "0"
       ? sortedList
       : sortedList.filter((elem) => elem.category === category);
 
   return (
     <div id="container">
       <ListGroup as="ol">
-        {/* 추후 filteredList로 바꿀 예정 */}
-        {sortedList.map((elem) => {
+        {filteredList.map((elem) => {
           return searchText === "" ||
             elem.tags.some((tag) => tag.includes(searchText)) ||
             elem.title.includes(searchText) ||
