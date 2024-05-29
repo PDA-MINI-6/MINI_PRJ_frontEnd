@@ -12,7 +12,11 @@ const PopupSearch = ({ category }) => {
     <div className="parent">
       <PopupSearchInput searchText={searchText} setSearchText={setSearchText} />
       <div className="search-select">
-        <PopupSearchSelect setSortOption={setSortOption} />
+        <PopupSearchSelect
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          category={category}
+        />
       </div>
       <PopupSearchList
         sortOption={sortOption}
