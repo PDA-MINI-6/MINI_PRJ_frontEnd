@@ -91,17 +91,19 @@ const PopupSearchList = ({ sortOption, searchText, category }) => {
                   <span style={{ fontSize: "12px", margin: "6px" }}>
                     {elem.address}
                   </span>
-                  <span
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "600",
-                      color: "gray",
-                      margin: "6px",
-                    }}
-                  >
-                    {elem.startDate.substr(0, 10)} ~{" "}
-                    {elem.endDate.substr(0, 10)}
-                  </span>
+                  {elem.category === "popup" ? (
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        color: "gray",
+                        margin: "6px",
+                      }}
+                    >
+                      {elem.startDate.substr(0, 10)} ~{" "}
+                      {elem.endDate.substr(0, 10)}
+                    </span>
+                  ) : null}
                 </div>
               </div>
               <PopupSearchLiked
