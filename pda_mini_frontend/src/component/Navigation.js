@@ -33,8 +33,8 @@ const Navigation = ({ setCategory }) => {
           disabled={!isMainpage}
         >
           <option value="0">전체</option>
-          <option value="1">팝업스토어</option>
-          <option value="2">식당</option>
+          <option value="popup">팝업스토어</option>
+          <option value="restaurant">식당</option>
           <option value="3">카페</option>
         </select>
         <Navbar.Brand
