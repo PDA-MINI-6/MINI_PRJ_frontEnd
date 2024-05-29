@@ -7,7 +7,7 @@ import { naverMapContext } from "./NaverMapProvider";
 import { REQUEST_URL } from "../constant";
 import "./popupSearch.css";
 
-const PopupSearchList = ({ sortOption, searchText, category }) => {
+const PopupSearchList = ({ sortOption, searchText, category, mylike }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
   const { initMarker, initMap, moveMap } = useContext(naverMapContext);
@@ -34,88 +34,88 @@ const PopupSearchList = ({ sortOption, searchText, category }) => {
     }
   });
 
-  const filteredList =
-    category === "0"
-      ? sortedList
-      : sortedList.filter((elem) => elem.category === category);
+  const filteredList = sortedList.filter((elem) => {
+    const isLiked = localStorage.getItem(`liked_${elem.id}`) === "true";
+    if (mylike && !isLiked) return false;
+    if (category !== "0" && elem.category !== category) return false;
+    if (
+      searchText &&
+      !elem.tags.some((tag) => tag.includes(searchText)) &&
+      !elem.title.includes(searchText) &&
+      !elem.content.includes(searchText)
+    )
+      return false;
+    return true;
+  });
 
   return (
     <div id="container">
       <ListGroup as="ol">
-        {filteredList.map((elem) => {
-          return searchText === "" ||
-            elem.tags.some((tag) => tag.includes(searchText)) ||
-            elem.title.includes(searchText) ||
-            elem.content.includes(searchText) ? (
-            <ListGroup.Item
-              key={elem.id}
-              action
-              as="li"
-              className="d-flex justify-content-between align-items-start"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                moveMap(elem.location);
-                navigate(`/${elem.id}`);
-              }}
-            >
-              <div>
-                <img
-                  src={elem.images[0]}
-                  style={{
-                    width: "100px",
-                    height: "80px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div
-                className="ms-2 me-auto d-flex flex-column justify-content-center"
-                style={{ width: "100%" }}
-              >
-                <div className="fw-bold" style={{ margin: "2px 0" }}>
-                  {elem.title}
-                </div>
-                <div className="mainTag">
-                  {elem.tags.map(
-                    (tag, index) =>
-                      tag.trim() !== "" && (
-                        <span key={index} className="mainHashtag">
-                          {tag.trim()}
-                        </span>
-                      )
-                  )}
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ fontSize: "12px", margin: "6px" }}>
-                    {elem.address}
-                  </span>
-                  {elem.category === "popup" ? (
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "gray",
-                        margin: "6px",
-                      }}
-                    >
-                      {elem.startDate.substr(0, 10)} ~{" "}
-                      {elem.endDate.substr(0, 10)}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-              <PopupSearchLiked
-                initialLiked={
-                  localStorage.getItem(`liked_${elem.id}`) === "true"
-                }
-                initialLikes={elem.liked}
-                id={elem.id}
+        {filteredList.map((elem) => (
+          <ListGroup.Item
+            key={elem.id}
+            action
+            as="li"
+            className="d-flex justify-content-between align-items-start"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              moveMap(elem.location);
+              navigate(`/${elem.id}`);
+            }}
+          >
+            <div>
+              <img
+                src={elem.images[0]}
+                style={{
+                  width: "100px",
+                  height: "80px",
+                  objectFit: "contain",
+                }}
               />
-            </ListGroup.Item>
-          ) : null;
-        })}
+            </div>
+            <div
+              className="ms-2 me-auto d-flex flex-column justify-content-center"
+              style={{ width: "100%" }}
+            >
+              <div className="fw-bold" style={{ margin: "2px 0" }}>
+                {elem.title}
+              </div>
+              <div className="mainTag">
+                {elem.tags.map(
+                  (tag, index) =>
+                    tag.trim() !== "" && (
+                      <span key={index} className="mainHashtag">
+                        {tag.trim()}
+                      </span>
+                    )
+                )}
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: "12px", margin: "6px" }}>
+                  {elem.address}
+                </span>
+                {elem.category === "popup" ? (
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "gray",
+                      margin: "6px",
+                    }}
+                  >
+                    {elem.startDate.substr(0, 10)} ~{" "}
+                    {elem.endDate.substr(0, 10)}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            <PopupSearchLiked
+              initialLiked={localStorage.getItem(`liked_${elem.id}`) === "true"}
+              initialLikes={elem.liked}
+              id={elem.id}
+            />
+          </ListGroup.Item>
+        ))}
       </ListGroup>
     </div>
   );
