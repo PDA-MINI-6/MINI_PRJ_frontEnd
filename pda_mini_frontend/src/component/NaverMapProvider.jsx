@@ -16,10 +16,10 @@ export default function NaverMapProvider({ children }) {
     ready.current = true;
     const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
       center: {
-        lat: 37.559771,
-        lng: 126.942367,
+        lat: 37.54514318331212,
+        lng: 127.05688996207206,
       }, //지도의 중심 좌표!
-      zoom: 13, //지도의 초기 줌 레벨
+      zoom: 15, //지도의 초기 줌 레벨
       minZoom: 7, //지도의 최소 줌 레벨
     });
     _map.current = map;
