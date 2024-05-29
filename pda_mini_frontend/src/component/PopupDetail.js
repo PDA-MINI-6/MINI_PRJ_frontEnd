@@ -17,18 +17,19 @@ const PopupDetail = () => {
   useEffect(() => {
     axios
       .get(`${REQUEST_URL}/${id}`)
-      .then((response) => {
+      .then(response => {
         const data = response.data;
+        console.log(data);
         setPropData(data); // propdata를 설정합니다.
         if (data.category === "popup") {
           setPopupData(data);
-        } else if (data.category === "food") {
+        } else if (data.category === "restaurant") {
           setFoodData(data);
         } else if (data.category === "cafe") {
           setCafeData(data);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error fetching popup detail:", error);
       });
   }, [id]);
@@ -48,7 +49,9 @@ const PopupDetail = () => {
     <Container id="detailcontainer">
       <Row>{renderRoot()}</Row>
       <Row>
-        <PopupDetailComment />
+        {popupData ? (
+          <PopupDetailComment popupData={popupData} id={id} />
+        ) : null}
       </Row>
     </Container>
   );
