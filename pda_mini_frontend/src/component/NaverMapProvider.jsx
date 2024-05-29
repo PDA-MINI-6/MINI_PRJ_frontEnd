@@ -49,12 +49,19 @@ export default function NaverMapProvider({ children }) {
   const initMarker = (data) => {
     markers = data.map((d, idx) => {
       const marker = new window.naver.maps.Marker({
+        icon: {
+          url: `/markerImg/${d.category}.png`,
+          // size: new window.naver.maps.Size(, 500),
+          scaledSize: new window.naver.maps.Size(18, 30),
+        },
         position: {
           lat: d.location.lat,
           lng: d.location.lng,
         },
         map: _map.current,
       });
+
+      // console.log(marker.icon.url);
 
       window.naver.maps.Event.addListener(marker, "click", () => {
         navigate(`/${d.id}`);
