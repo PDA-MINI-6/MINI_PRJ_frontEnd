@@ -18,7 +18,7 @@ export default function Root({ popupData }) {
       <div className="root">
         <PopupSlide images={popupData.images} />
         <PopupLikecnt like={popupData.liked} />
-        {start === popupData.startDate ? (
+        {"popup" === popupData.category ? (
           <PopupList
             title={popupData.title}
             address={popupData.address}
@@ -27,13 +27,13 @@ export default function Root({ popupData }) {
             conti={popupData.content}
           />
         ) : (
-          <PopupList2>
+          <PopupList2
             title={popupData.title}
             address={popupData.address}
-            open={popupData.open}
-            end={popupData.close}
+            start={popupData.startDate}
+            end={popupData.endDate}
             conti={popupData.content}
-          </PopupList2>
+          />
         )}
         <PopupTag tags={popupData.tags} />
       </div>

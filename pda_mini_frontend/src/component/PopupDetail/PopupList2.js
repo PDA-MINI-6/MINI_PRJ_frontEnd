@@ -2,6 +2,7 @@ import React from "react";
 import "./PopupList.css";
 
 export default function PopupList2({ title, address, start, end, conti }) {
+  console.log(title, address, start, end, conti);
   return (
     <div className="mt-6 border-t border-gray-100">
       <dl className="details-grid">

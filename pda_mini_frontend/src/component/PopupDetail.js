@@ -15,12 +15,11 @@ const PopupDetail = () => {
   const [cafeData, setCafeData] = useState(null);
 
   useEffect(() => {
-    console.log("test");
     axios
       .get(`${REQUEST_URL}/${id}`)
       .then((response) => {
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         setPropData(data); // propdata를 설정합니다.
         if (data.category === "popup") {
           setPopupData(data);
