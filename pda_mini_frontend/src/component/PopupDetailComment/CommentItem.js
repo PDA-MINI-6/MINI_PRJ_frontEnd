@@ -1,6 +1,8 @@
 import React from "react";
 import { MDBCard, MDBCardBody, MDBCardImage } from "mdb-react-ui-kit";
 import { TiDeleteOutline } from "react-icons/ti";
+import axios from "axios";
+import { REQUEST_URL } from "../../constant";
 
 const CommentItem = props => {
   function timeAgo(dateString) {
@@ -29,6 +31,31 @@ const CommentItem = props => {
     return "just now";
   }
 
+  const removeComment = commentId => {
+    const password = prompt("비밀번호를 입력해주세요:");
+    if (!password) {
+      return; // 사용자가 비밀번호 입력을 취소한 경우
+    }
+
+    axios
+      .delete(`${REQUEST_URL}/${props.popupDataId}/comment/${commentId}`, {
+        data: { password },
+      })
+      .then(response => {
+        const sortedComments = response.data.comments.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        props.setCommentList(sortedComments);
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 403) {
+          alert("비밀번호가 잘못되었습니다.");
+        } else {
+          console.error("Error deleting comment:", error);
+        }
+      });
+  };
+
   return (
     <MDBCard
       className="mb-4"
@@ -36,7 +63,13 @@ const CommentItem = props => {
       <MDBCardBody>
         <div className="d-flex justify-content-between">
           <p>{props.content}</p>
-          <TiDeleteOutline size="20px" style={{ cursor: "pointer" }} />
+          <TiDeleteOutline
+            size="20px"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              removeComment(props.commentId);
+            }}
+          />
         </div>
 
         <div className="d-flex justify-content-between">

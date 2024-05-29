@@ -28,7 +28,9 @@ const PopupDetail = () => {
       <Container id="detailcontainer">
         <Row>{popupData && <Root popupData={popupData} />}</Row>
         <Row>
-          <PopupDetailComment />
+          {popupData ? (
+            <PopupDetailComment popupData={popupData} id={id} />
+          ) : null}
         </Row>
       </Container>
     </>
