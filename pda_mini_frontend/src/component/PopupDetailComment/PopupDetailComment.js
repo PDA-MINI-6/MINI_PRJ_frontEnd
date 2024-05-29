@@ -10,7 +10,7 @@ import {
 import CommentItem from "./CommentItem";
 import CommentInput from "./CommentInput";
 
-const PopupDetailComment = props => {
+const PopupDetailComment = (props) => {
   const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,8 @@ const PopupDetailComment = props => {
             <MDBCol style={{ padding: 0 }}>
               <MDBCard
                 className="shadow-0 border"
-                style={{ backgroundColor: "#ffffff" }}>
+                style={{ backgroundColor: "#ffffff" }}
+              >
                 <MDBCardBody>
                   {/* input item */}
                   <CommentInput
@@ -38,7 +39,7 @@ const PopupDetailComment = props => {
                     setCommentList={setCommentList}
                   />
                   {/* list item */}
-                  {commentList.map(comment => (
+                  {commentList.map((comment) => (
                     <CommentItem
                       key={comment._id}
                       commentId={comment._id}

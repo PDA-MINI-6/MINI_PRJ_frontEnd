@@ -1,3 +1,12 @@
+.carousel-item {
+  background-color: gray;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  background-color: black;
+}
+
 .carousel-control-next:focus,
 .carousel-control-next:hover,
 .carousel-control-prev:focus,
