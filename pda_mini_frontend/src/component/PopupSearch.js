@@ -7,6 +7,7 @@ import "./popupSearch.css";
 const PopupSearch = ({ category }) => {
   const [searchText, setSearchText] = useState("");
   const [sortOption, setSortOption] = useState("1"); // 1: 최신순, 2: 인기순
+  const [mylike, setMylike] = useState(false);
 
   return (
     <div className="parent">
@@ -16,12 +17,15 @@ const PopupSearch = ({ category }) => {
           sortOption={sortOption}
           setSortOption={setSortOption}
           category={category}
+          mylike={mylike}
+          setMylike={setMylike}
         />
       </div>
       <PopupSearchList
         sortOption={sortOption}
         searchText={searchText}
         category={category}
+        mylike={mylike}
       />
     </div>
   );
