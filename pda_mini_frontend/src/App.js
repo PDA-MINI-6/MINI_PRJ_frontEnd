@@ -9,7 +9,7 @@ import NaverMapProvider from "./component/NaverMapProvider";
 import Navigation from "./component/Navigation";
 
 function App() {
-  const [category, setCategory] = useState("0"); //0이면 전체, 1이면 팝업스토어, 2이면 식당, 3이면 카페
+  const [category, setCategory] = useState("0");
 
   return (
     <>
@@ -23,7 +23,7 @@ function App() {
                 <Route path="/:id" element={<PopupDetail />} />
               </Routes>
             </Col>
-            <Col xs={6} sm={6} style={{ height: "90vh" }}>
+            <Col xs={6} sm={6} style={{ height: "92vh" }}>
               <PopupMap />
             </Col>
           </Row>
