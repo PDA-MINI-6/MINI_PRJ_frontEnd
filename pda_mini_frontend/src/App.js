@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Navigation setCategory={setCategory} />
-      <NaverMapProvider>
+      <NaverMapProvider category={category}>
         <Container fluid>
           <Row>
             <Col xs={6} sm={6}>
