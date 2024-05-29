@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import axios from "axios";
 
-const PopupSearchLiked = ({
-  initialLiked,
-  initialLikes,
-  id,
-  //onLikesChange,
-}) => {
+const PopupSearchLiked = ({ initialLiked, initialLikes, id }) => {
   const [liked, setLiked] = useState(initialLiked); // 좋아요 눌렀는지 여부
   const [likes, setLikes] = useState(initialLikes); // 좋아요 수
 

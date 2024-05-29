@@ -6,7 +6,7 @@ import PopupSearchLiked from "./PopupSearchLiked";
 import { naverMapContext } from "./NaverMapProvider";
 import "./popupSearch.css";
 
-const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
+const PopupSearchList = ({ sortOption, searchText, category }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
   const { initMarker, initMap, moveMap } = useContext(naverMapContext);
@@ -33,14 +33,20 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
     }
   });
 
+  const filteredList =
+    category === 0
+      ? sortedList
+      : sortedList.filter((elem) => elem.category === category);
+
   return (
     <div id="container">
       <ListGroup as="ol">
+        {/* 추후 filteredList로 바꿀 예정 */}
         {sortedList.map((elem) => {
           return searchText === "" ||
             elem.tags.some((tag) => tag.includes(searchText)) ||
             elem.title.includes(searchText) ||
-            elem.subtitle.includes(searchText) ? (
+            elem.content.includes(searchText) ? (
             <ListGroup.Item
               key={elem.id}
               action
@@ -62,13 +68,40 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                   }}
                 />
               </div>
-              <div className="ms-2 me-auto d-flex flex-column justify-content-center">
+              <div
+                className="ms-2 me-auto d-flex flex-column justify-content-center"
+                style={{ width: "100%" }}
+              >
                 <div className="fw-bold" style={{ margin: "2px 0" }}>
                   {elem.title}
                 </div>
-                "{elem.subtitle}"
-                <div style={{ fontSize: "12px", margin: "6px" }}>
-                  {elem.startDate} ~ {elem.endDate}
+                <div className="mainTag">
+                  {elem.tags.map(
+                    (tag, index) =>
+                      tag.trim() !== "" && (
+                        <span key={index} className="mainHashtag">
+                          {tag.trim()}
+                        </span>
+                      )
+                  )}
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <span style={{ fontSize: "12px", margin: "6px" }}>
+                    {elem.address}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "gray",
+                      margin: "6px",
+                    }}
+                  >
+                    {elem.startDate.substr(0, 10)} ~{" "}
+                    {elem.endDate.substr(0, 10)}
+                  </span>
                 </div>
               </div>
               <PopupSearchLiked
@@ -77,7 +110,6 @@ const PopupSearchList = ({ sortOption, searchText, setSearchText }) => {
                 }
                 initialLikes={elem.liked}
                 id={elem.id}
-                //onLikesChange={handleLikesChange}
               />
             </ListGroup.Item>
           ) : null;
