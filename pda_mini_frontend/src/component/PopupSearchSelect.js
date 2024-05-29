@@ -12,8 +12,8 @@ const PopupSearchSelect = ({ setSortOption, category, mylike, setMylike }) => {
 
   return (
     <div className="search-select-bar">
-      <div className="mylike">
-        <div onClick={() => setMylike((prev) => !prev)}>
+      <div className="mylike" onClick={() => setMylike((prev) => !prev)}>
+        <div>
           {mylike ? (
             <MdCheckBox
               className="mylike-check"
