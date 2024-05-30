@@ -10,7 +10,7 @@ const Navigation = ({ setCategory }) => {
   const isMainpage = location.pathname === "/";
 
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar bg="dark" data-bs-theme="dark" style={{ padding: "0" }}>
       <div
         style={{
           width: "100%",
@@ -41,12 +41,10 @@ const Navigation = ({ setCategory }) => {
           onClick={() => navigate("/")}
           style={{ cursor: "pointer" }}
         >
-          Service{" "}
           <img
             alt=""
-            src="/logo192.png"
-            width="30"
-            height="30"
+            src="/logo.svg"
+            height="50"
             className="d-inline-block align-top"
           />
         </Navbar.Brand>

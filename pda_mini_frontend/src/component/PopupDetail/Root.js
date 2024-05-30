@@ -8,7 +8,7 @@ import PopupList2 from "./PopupList2";
 export default function Root({ popupData }) {
   console.log(popupData);
 
-  const { title, address, images, liked, tags, content } = popupData;
+  const { id, title, address, images, liked, tags, content } = popupData;
   const start = popupData.startDate || popupData.open;
   const end = popupData.endDate || popupData.close;
   const conti = popupData.price || popupData.content;
@@ -17,7 +17,7 @@ export default function Root({ popupData }) {
     <>
       <div className="root">
         <PopupSlide images={popupData.images} />
-        <PopupLikecnt like={popupData.liked} />
+        <PopupLikecnt liked={popupData.liked} id={popupData.id} />
         {"popup" === popupData.category ? (
           <PopupList
             title={popupData.title}
