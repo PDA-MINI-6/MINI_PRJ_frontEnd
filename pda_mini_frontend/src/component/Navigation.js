@@ -9,6 +9,12 @@ const Navigation = ({ setCategory }) => {
   const location = useLocation();
   const isMainpage = location.pathname === "/";
 
+  const goHome = () => {
+    if (!isMainpage) {
+      navigate("/");
+    }
+  };
+
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ padding: "0" }}>
       <div
@@ -35,14 +41,9 @@ const Navigation = ({ setCategory }) => {
           <option value="0">전체</option>
           <option value="popup">팝업스토어</option>
           <option value="restaurant">식당</option>
-          <option value="3">카페</option>
+          <option value="cafe">카페</option>
         </select>
-        <Navbar.Brand
-          onClick={() => {
-            navigate("/");
-          }}
-          style={{ cursor: "pointer" }}
-        >
+        <Navbar.Brand onClick={goHome} style={{ cursor: "pointer" }}>
           <img
             alt=""
             src="/logo.svg"
@@ -55,15 +56,11 @@ const Navigation = ({ setCategory }) => {
             color="white"
             size="20px"
             style={{ cursor: "pointer", paddingBottom: "3px" }}
-            onClick={() => {
-              navigate("/");
-            }}
+            onClick={goHome}
           />
           <span
             style={{ color: "white", marginLeft: "3px", cursor: "pointer" }}
-            onClick={() => {
-              navigate("/");
-            }}
+            onClick={goHome}
           >
             HOME
           </span>
