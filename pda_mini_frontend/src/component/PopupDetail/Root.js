@@ -47,19 +47,7 @@ export default function Root({ popupData }) {
         )}
       </div>
 
-      {/* <div className="root">
-      <PopupSlide images={images} />
-      <PopupLikecnt like={liked} />
-      <PopupList
-        title={title}
-        address={address}
-        start={start}
-        end={end}
-        content={conti}
-         
-      />
       <PopupTag tags={tags} />
-    </div> */}
     </>
   );
 }
