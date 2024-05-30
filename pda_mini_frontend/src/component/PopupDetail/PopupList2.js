@@ -1,10 +1,14 @@
 import React from "react";
 import "./PopupList.css";
+import { useState } from "react";
 
 export default function PopupList2({ title, address, start, end, conti }) {
-  console.log(title, address, start, end, conti);
+  const [zoom, setZoom] = useState(false);
   return (
     <div className="mt-6 border-t border-gray-100">
+      {/* <button onClick={() => setZoom(!zoom)} className="zoom-button">
+        {zoom ? "확대하기 종료" : "확대하기"}
+      </button> */}
       <dl className="details-grid">
         <div className="detail-item">
           <dt
@@ -48,7 +52,7 @@ export default function PopupList2({ title, address, start, end, conti }) {
             className="detail-title"
             style={{ fontWeight: "bold", fontSize: "20px" }}
           >
-            Price
+            MENU
           </dt>
           <dd
             className="detail-content"
