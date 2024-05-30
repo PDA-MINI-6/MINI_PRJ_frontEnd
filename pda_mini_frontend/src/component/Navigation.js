@@ -3,18 +3,15 @@ import { Navbar } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import "./popupSearch.css";
-import { naverMapContext } from "./NaverMapProvider";
 
 const Navigation = ({ setCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMainpage = location.pathname === "/";
-  const { offAnimation } = useContext(naverMapContext);
 
   const goHome = () => {
     if (!isMainpage) {
       navigate("/");
-      offAnimation();
     }
   };
 
