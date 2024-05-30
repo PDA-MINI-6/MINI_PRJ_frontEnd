@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./PopupList.css";
-import zoomIcon from "./free-icon-zoom.png";
+// import zoomIcon from "./free-icon-zoom.png";
 
 export default function PopupList({ title, address, start, end, conti }) {
   const [zoom, setZoom] = useState(false);
