@@ -1,5 +1,6 @@
+import { click } from "@testing-library/user-event/dist/click";
 import { createContext, useEffect, useCallback, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const naverMapContext = createContext();
 
@@ -8,6 +9,7 @@ export default function NaverMapProvider({ children, category }) {
   let markers = useRef([]);
   const _map = useRef();
   let clickedMarker = useRef();
+  let prevClickedMarker = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +33,21 @@ export default function NaverMapProvider({ children, category }) {
 
   const initMap = useCallback((el) => {
     if (ready.current) return;
+    window.addEventListener("popstate", () => {
+      if (window.location.pathname === "/") {
+        clickedMarker.current.setAnimation(0);
+        return;
+      }
+
+      if (prevClickedMarker.current === undefined) {
+        clickedMarker.current.setAnimation(0);
+        clickedMarker.current = null;
+        return;
+      }
+      clickedMarker.current.setAnimation(0);
+      clickedMarker.current = prevClickedMarker.current;
+      clickedMarker.current.setAnimation(1);
+    });
     console.log("init map");
     ready.current = true;
     const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
@@ -49,13 +66,14 @@ export default function NaverMapProvider({ children, category }) {
     // });
   }, []);
 
-  const moveMap = useCallback((newCenter) => {
-    _map.current.updateBy(newCenter, 16);
+  const moveMap = useCallback((id) => {
+    prevClickedMarker.current = clickedMarker.current;
     markers.current.map((m, idx) => {
-      if (
-        m.marker.position._lat === newCenter.lat &&
-        m.marker.position._lng === newCenter.lng
-      ) {
+      if (m.id === id) {
+        _map.current.panTo(m.marker.position, {
+          duration: 500,
+          easing: "linear",
+        });
         if (clickedMarker.current) {
           clickedMarker.current.setAnimation(null);
         }
@@ -65,7 +83,23 @@ export default function NaverMapProvider({ children, category }) {
     });
   }, []);
 
+  const offAnimation = useCallback(() => {
+    clickedMarker.current.setAnimation(0);
+    clickedMarker.current = null;
+  }, []);
+
   const initMarker = (data) => {
+    if (markers.current.length !== 0) {
+      console.log(markers.current);
+      console.log("marker already initialized!");
+      markers.current.map((m) => {
+        m.marker.map = _map.current;
+      });
+
+      return;
+    }
+    console.log(markers.current);
+    console.log("marker initialize");
     markers.current = data.map((d, idx) => {
       const marker = {
         marker: new window.naver.maps.Marker({
@@ -81,9 +115,8 @@ export default function NaverMapProvider({ children, category }) {
           map: _map.current,
         }),
         category: d.category,
+        id: d.id,
       };
-
-      // console.log(marker.icon.url);
 
       window.naver.maps.Event.addListener(marker.marker, "click", () => {
         navigate(`/${d.id}`);
@@ -93,7 +126,8 @@ export default function NaverMapProvider({ children, category }) {
         });
 
         if (clickedMarker.current) {
-          clickedMarker.current.setAnimation(null);
+          clickedMarker.current.setAnimation(0);
+          prevClickedMarker.current = clickedMarker.current;
         }
         clickedMarker.current = marker.marker;
         clickedMarker.current.setAnimation(1);
@@ -101,10 +135,21 @@ export default function NaverMapProvider({ children, category }) {
 
       return marker;
     });
+
+    if (window.location.pathname !== "/") {
+      clickedMarker.current = markers.current.find(
+        (m) => m.id === Number(window.location.pathname.slice(1))
+      ).marker;
+      clickedMarker.current.setAnimation(1);
+    }
+
+    // alert(window.location.pathname.slice(1));
   };
 
   return (
-    <naverMapContext.Provider value={{ ready, initMap, moveMap, initMarker }}>
+    <naverMapContext.Provider
+      value={{ ready, initMap, moveMap, initMarker, offAnimation }}
+    >
       {children}
     </naverMapContext.Provider>
   );

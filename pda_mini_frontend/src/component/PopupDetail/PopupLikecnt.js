@@ -1,42 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { REQUEST_URL } from "../../constant";
+import axios from "axios";
 
-export default function PopupLikecnt(liked) {
-  console.log(liked);
-  const [like, setLike] = useState("0");
-  const [isClick, setIsClick] = useState(true);
-
-  useEffect(() => {
-    const storedLikeCount = localStorage.getItem("likeCount");
-    const storedIsClick = localStorage.getItem("isClick");
-    // setLike(liked);
-
-    // if (storedLikeCount !== null) {
-    //   setLike(storedLikeCount);
-    //   // setLike(parseInt(storedLikeCount, 10));
-    // } else
-
-    if (liked !== null) {
-      setLike(liked["like"]);
-    }
-
-    if (storedIsClick !== null) {
-      setIsClick(storedIsClick === "true");
-    }
-  }, []); // Only re-run effect if liked prop changes
+const PopupLikecnt = ({ liked, id }) => {
+  const [likes, setLikes] = useState(liked);
+  const [isLiked, setIsLiked] = useState(
+    localStorage.getItem(`liked_${id}`) === "true"
+  );
 
   const handleLikeClick = () => {
-    if (isClick) {
-      setLike(like + 1);
-      setIsClick(false);
-      localStorage.setItem("likeCount", like + 1);
-      localStorage.setItem("isClick", false);
+    if (isLiked) {
+      setIsLiked(false);
+      setLikes((prev) => prev - 1);
+      axios.patch(`${REQUEST_URL}/${id}/unlike`, {
+        id,
+        liked: likes,
+      });
     } else {
-      setLike(like > 0 ? like - 1 : 0);
-      setIsClick(true);
-      localStorage.setItem("likeCount", like > 0 ? like - 1 : 0);
-      localStorage.setItem("isClick", true);
+      setIsLiked(true);
+      setLikes((prev) => prev + 1);
+      axios.patch(`${REQUEST_URL}/${id}/like`, {
+        id,
+        liked: likes,
+      });
     }
+    localStorage.setItem(`liked_${id}`, !isLiked);
   };
 
   return (
@@ -47,11 +36,13 @@ export default function PopupLikecnt(liked) {
             onClick={handleLikeClick}
             style={{ cursor: "pointer", marginRight: "8px" }}
           >
-            {isClick ? <FaRegHeart /> : <FaHeart color="red" />}
+            {isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
           </span>
-          <span style={{ cursor: "default" }}>{like}</span>
+          <span style={{ cursor: "default" }}>{likes}</span>
         </div>
       </h3>
     </div>
   );
-}
+};
+
+export default PopupLikecnt;
