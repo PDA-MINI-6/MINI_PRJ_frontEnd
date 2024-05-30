@@ -37,7 +37,7 @@ const Navigation = ({ setCategory }) => {
           <option value="0">전체</option>
           <option value="popup">팝업스토어</option>
           <option value="restaurant">식당</option>
-          <option value="3">카페</option>
+          <option value="cafe">카페</option>
         </select>
         <Navbar.Brand
           onClick={() => {
