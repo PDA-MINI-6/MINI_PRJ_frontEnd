@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { REQUEST_URL } from "../../constant";
 import axios from "axios";
