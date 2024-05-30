@@ -18,7 +18,7 @@ export default function Root({ popupData }) {
       <div className="root">
         <PopupSlide images={popupData.images} />
         <PopupLikecnt liked={popupData.liked} id={popupData.id} />
-        {"popup" === popupData.category ? (
+        {popupData.category === "popup" ? (
           <PopupList
             title={popupData.title}
             address={popupData.address}
@@ -26,8 +26,17 @@ export default function Root({ popupData }) {
             end={popupData.endDate}
             conti={popupData.content}
           />
+        ) : popupData.category === "cafe" ? (
+          // 카페 카테고리일 경우
+          <PopupList2
+            title={popupData.title}
+            address={popupData.address}
+            start={popupData.startDate}
+            end={popupData.endDate}
+            conti={popupData.content}
+          />
         ) : (
-          //레스토랑 카테코리일 경우
+          // 레스토랑 카테고리일 경우
           <PopupList2
             title={popupData.title}
             address={popupData.address}
@@ -36,7 +45,6 @@ export default function Root({ popupData }) {
             conti={popupData.content}
           />
         )}
-        <PopupTag tags={popupData.tags} />
       </div>
 
       {/* <div className="root">
