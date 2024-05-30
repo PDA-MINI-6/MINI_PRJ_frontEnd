@@ -10,11 +10,10 @@ import Navigation from "./component/Navigation";
 
 function App() {
   const [category, setCategory] = useState("0");
-
   return (
     <>
-      <Navigation setCategory={setCategory} />
       <NaverMapProvider category={category}>
+        <Navigation setCategory={setCategory} />
         <Container fluid>
           <Row>
             <Col xs={6} sm={6}>
