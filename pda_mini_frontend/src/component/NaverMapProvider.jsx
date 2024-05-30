@@ -8,7 +8,6 @@ export default function NaverMapProvider({ children, category }) {
   let markers = useRef([]);
   const _map = useRef();
   let clickedMarker = useRef();
-  // let prevClickedMarker = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,37 +61,16 @@ export default function NaverMapProvider({ children, category }) {
       minZoom: 7, //지도의 최소 줌 레벨
     });
     _map.current = map;
-
-    // markers = markers.map((m) => {
-    //   m.setMap(_map.current);
-    //   return m;
-    // });
   }, []);
 
   const moveMap = useCallback((m) => {
     m.setAnimation(1);
-    // prevClickedMarker.current = clickedMarker.current;
-    // markers.current.map((m, idx) => {
-    // if (m.id === id) {
+
     _map.current.panTo(m.position, {
       duration: 500,
       easing: "linear",
     });
-    // if (clickedMarker.current) {
-    //   clickedMarker.current.setAnimation(null);
-    // }
-    // clickedMarker.current = m.marker;
-    // clickedMarker.current.setAnimation(1);
-    // }
-    // });
   }, []);
-
-  // const offAnimation = useCallback(() => {
-  //   if (clickedMarker.current) {
-  //     clickedMarker.current.setAnimation(0);
-  //     clickedMarker.current = null;
-  //   }
-  // }, []);
 
   const initMarker = (data) => {
     if (markers.current.length !== 0) {
@@ -108,7 +86,6 @@ export default function NaverMapProvider({ children, category }) {
         marker: new window.naver.maps.Marker({
           icon: {
             url: `/markerImg/${d.category}.png`,
-            // size: new window.naver.maps.Size(, 500),
             scaledSize: new window.naver.maps.Size(18, 30),
           },
           position: {
@@ -123,18 +100,8 @@ export default function NaverMapProvider({ children, category }) {
 
       window.naver.maps.Event.addListener(marker.marker, "click", () => {
         navigate(`/${d.id}`);
-        // _map.current.panTo(marker.marker.position, {
-        //   duration: 500,
-        //   easing: "linear",
-        // });
-
-        // if (clickedMarker.current) {
-        //   clickedMarker.current.setAnimation(0);
-        //   prevClickedMarker.current = clickedMarker.current;
-        // }
-        // clickedMarker.current = marker.marker;
-        // clickedMarker.current.setAnimation(1);
       });
+      console.debug(marker);
 
       return marker;
     });
@@ -145,8 +112,6 @@ export default function NaverMapProvider({ children, category }) {
       ).marker;
       clickedMarker.current.setAnimation(1);
     }
-
-    // alert(window.location.pathname.slice(1));
   };
 
   return (
