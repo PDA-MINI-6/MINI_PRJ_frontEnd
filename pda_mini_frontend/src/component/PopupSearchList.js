@@ -59,7 +59,7 @@ const PopupSearchList = ({ sortOption, searchText, category, mylike }) => {
             className="d-flex justify-content-between align-items-start"
             style={{ cursor: "pointer" }}
             onClick={() => {
-              moveMap(elem.location);
+              moveMap(elem.id);
               navigate(`/${elem.id}`);
             }}
           >

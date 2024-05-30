@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navbar } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import "./popupSearch.css";
+import { naverMapContext } from "./NaverMapProvider";
 
 const Navigation = ({ setCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMainpage = location.pathname === "/";
+  const { offAnimation } = useContext(naverMapContext);
 
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ padding: "0" }}>
@@ -38,7 +40,10 @@ const Navigation = ({ setCategory }) => {
           <option value="3">카페</option>
         </select>
         <Navbar.Brand
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            offAnimation();
+          }}
           style={{ cursor: "pointer" }}
         >
           <img
@@ -53,11 +58,17 @@ const Navigation = ({ setCategory }) => {
             color="white"
             size="20px"
             style={{ cursor: "pointer", paddingBottom: "3px" }}
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/");
+              offAnimation();
+            }}
           />
           <span
             style={{ color: "white", marginLeft: "3px", cursor: "pointer" }}
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/");
+              offAnimation();
+            }}
           >
             HOME
           </span>
