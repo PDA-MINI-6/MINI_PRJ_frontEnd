@@ -4,8 +4,9 @@ import { TiDeleteOutline } from "react-icons/ti";
 import axios from "axios";
 import { REQUEST_URL } from "../../constant";
 import PasswordModal from "./PasswordModal"; // PasswordModal 컴포넌트 임포트
+import { FaUser } from "react-icons/fa6";
 
-const CommentItem = props => {
+const CommentItem = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState(null);
 
@@ -35,12 +36,12 @@ const CommentItem = props => {
     return "just now";
   }
 
-  const handleDeleteClick = commentId => {
+  const handleDeleteClick = (commentId) => {
     setCommentIdToDelete(commentId);
     setShowModal(true);
   };
 
-  const handleConfirmDelete = password => {
+  const handleConfirmDelete = (password) => {
     setShowModal(false);
 
     axios
@@ -50,13 +51,13 @@ const CommentItem = props => {
           data: { password },
         }
       )
-      .then(response => {
+      .then((response) => {
         const sortedComments = response.data.comments.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         props.setCommentList(sortedComments);
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response && error.response.status === 403) {
           alert("비밀번호가 잘못되었습니다.");
         } else {
@@ -69,10 +70,11 @@ const CommentItem = props => {
     <>
       <MDBCard
         className="mb-4"
-        style={{ height: "80px", display: "flex", justifyContent: "center" }}>
+        style={{ height: "80px", display: "flex", justifyContent: "center" }}
+      >
         <MDBCardBody>
           <div className="d-flex justify-content-between">
-            <p>{props.content}</p>
+            <p style={{ fontSize: "15px" }}>{props.content}</p>
             <TiDeleteOutline
               size="20px"
               style={{ cursor: "pointer" }}
@@ -82,12 +84,7 @@ const CommentItem = props => {
 
           <div className="d-flex justify-content-between">
             <div className="d-flex flex-row align-items-center">
-              <MDBCardImage
-                src="http://localhost:3000/userImage.svg"
-                alt="avatar"
-                width="25"
-                height="25"
-              />
+              <FaUser />
               <p className="small mb-0 ms-2">{props.author}</p>
             </div>
             <div className="d-flex flex-row align-items-center">
