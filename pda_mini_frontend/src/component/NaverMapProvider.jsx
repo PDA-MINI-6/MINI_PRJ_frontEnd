@@ -33,6 +33,7 @@ export default function NaverMapProvider({ children, category }) {
       if (markers) {
         markers.current.map((m) => {
           m.marker.setVisible(true);
+          m.marker.setAnimation(2);
         });
       }
       return;
@@ -43,6 +44,7 @@ export default function NaverMapProvider({ children, category }) {
         m.marker.setVisible(false);
       } else {
         m.marker.setVisible(true);
+        m.marker.setAnimation(2);
       }
     });
   }, [category]);
@@ -97,7 +99,6 @@ export default function NaverMapProvider({ children, category }) {
         category: d.category,
         id: d.id,
       };
-
       window.naver.maps.Event.addListener(marker.marker, "click", () => {
         navigate(`/${d.id}`);
       });
