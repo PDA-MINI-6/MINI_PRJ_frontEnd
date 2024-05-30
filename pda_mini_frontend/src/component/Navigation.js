@@ -11,6 +11,13 @@ const Navigation = ({ setCategory }) => {
   const isMainpage = location.pathname === "/";
   const { offAnimation } = useContext(naverMapContext);
 
+  const goHome = () => {
+    if (!isMainpage) {
+      navigate("/");
+      offAnimation();
+    }
+  };
+
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ padding: "0" }}>
       <div
@@ -39,13 +46,7 @@ const Navigation = ({ setCategory }) => {
           <option value="restaurant">식당</option>
           <option value="cafe">카페</option>
         </select>
-        <Navbar.Brand
-          onClick={() => {
-            navigate("/");
-            offAnimation();
-          }}
-          style={{ cursor: "pointer" }}
-        >
+        <Navbar.Brand onClick={goHome} style={{ cursor: "pointer" }}>
           <img
             alt=""
             src="/logo.svg"
@@ -58,17 +59,11 @@ const Navigation = ({ setCategory }) => {
             color="white"
             size="20px"
             style={{ cursor: "pointer", paddingBottom: "3px" }}
-            onClick={() => {
-              navigate("/");
-              offAnimation();
-            }}
+            onClick={goHome}
           />
           <span
             style={{ color: "white", marginLeft: "3px", cursor: "pointer" }}
-            onClick={() => {
-              navigate("/");
-              offAnimation();
-            }}
+            onClick={goHome}
           >
             HOME
           </span>
