@@ -57,6 +57,7 @@ const CommentItem = (props) => {
         );
         props.setCommentList(sortedComments);
       })
+      .then(() => alert("댓글이 삭제되었습니다."))
       .catch((error) => {
         if (error.response && error.response.status === 403) {
           alert("비밀번호가 잘못되었습니다.");
