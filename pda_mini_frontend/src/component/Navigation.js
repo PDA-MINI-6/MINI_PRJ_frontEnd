@@ -3,13 +3,11 @@ import { Navbar } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import "./popupSearch.css";
-import { naverMapContext } from "./NaverMapProvider";
 
 const Navigation = ({ setCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMainpage = location.pathname === "/";
-  const { offAnimation } = useContext(naverMapContext);
 
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ padding: "0" }}>
@@ -42,7 +40,6 @@ const Navigation = ({ setCategory }) => {
         <Navbar.Brand
           onClick={() => {
             navigate("/");
-            offAnimation();
           }}
           style={{ cursor: "pointer" }}
         >
@@ -60,14 +57,12 @@ const Navigation = ({ setCategory }) => {
             style={{ cursor: "pointer", paddingBottom: "3px" }}
             onClick={() => {
               navigate("/");
-              offAnimation();
             }}
           />
           <span
             style={{ color: "white", marginLeft: "3px", cursor: "pointer" }}
             onClick={() => {
               navigate("/");
-              offAnimation();
             }}
           >
             HOME

@@ -1,6 +1,5 @@
-import { click } from "@testing-library/user-event/dist/click";
 import { createContext, useEffect, useCallback, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const naverMapContext = createContext();
 
@@ -9,8 +8,26 @@ export default function NaverMapProvider({ children, category }) {
   let markers = useRef([]);
   const _map = useRef();
   let clickedMarker = useRef();
-  let prevClickedMarker = useRef();
+  // let prevClickedMarker = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.location.pathname === "/" || markers.current.length === 0) {
+      if (clickedMarker.current !== undefined) {
+        clickedMarker.current.setAnimation(0);
+        clickedMarker.current = undefined;
+      }
+    } else {
+      if (clickedMarker.current) {
+        clickedMarker.current.setAnimation(null);
+      }
+      const temp = markers.current.find(
+        (m) => m.id === Number(window.location.pathname.slice(1))
+      ).marker;
+      clickedMarker.current = temp;
+      moveMap(temp);
+    }
+  }, [window.location.pathname, markers]);
 
   useEffect(() => {
     if (category === "0") {
@@ -33,21 +50,7 @@ export default function NaverMapProvider({ children, category }) {
 
   const initMap = useCallback((el) => {
     if (ready.current) return;
-    window.addEventListener("popstate", () => {
-      if (window.location.pathname === "/") {
-        clickedMarker.current.setAnimation(0);
-        return;
-      }
 
-      if (prevClickedMarker.current === undefined) {
-        clickedMarker.current.setAnimation(0);
-        clickedMarker.current = null;
-        return;
-      }
-      clickedMarker.current.setAnimation(0);
-      clickedMarker.current = prevClickedMarker.current;
-      clickedMarker.current.setAnimation(1);
-    });
     console.log("init map");
     ready.current = true;
     const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
@@ -66,40 +69,40 @@ export default function NaverMapProvider({ children, category }) {
     // });
   }, []);
 
-  const moveMap = useCallback((id) => {
-    prevClickedMarker.current = clickedMarker.current;
-    markers.current.map((m, idx) => {
-      if (m.id === id) {
-        _map.current.panTo(m.marker.position, {
-          duration: 500,
-          easing: "linear",
-        });
-        if (clickedMarker.current) {
-          clickedMarker.current.setAnimation(null);
-        }
-        clickedMarker.current = m.marker;
-        clickedMarker.current.setAnimation(1);
-      }
+  const moveMap = useCallback((m) => {
+    m.setAnimation(1);
+    // prevClickedMarker.current = clickedMarker.current;
+    // markers.current.map((m, idx) => {
+    // if (m.id === id) {
+    _map.current.panTo(m.position, {
+      duration: 500,
+      easing: "linear",
     });
+    // if (clickedMarker.current) {
+    //   clickedMarker.current.setAnimation(null);
+    // }
+    // clickedMarker.current = m.marker;
+    // clickedMarker.current.setAnimation(1);
+    // }
+    // });
   }, []);
 
-  const offAnimation = useCallback(() => {
-    clickedMarker.current.setAnimation(0);
-    clickedMarker.current = null;
-  }, []);
+  // const offAnimation = useCallback(() => {
+  //   if (clickedMarker.current) {
+  //     clickedMarker.current.setAnimation(0);
+  //     clickedMarker.current = null;
+  //   }
+  // }, []);
 
   const initMarker = (data) => {
     if (markers.current.length !== 0) {
-      console.log(markers.current);
-      console.log("marker already initialized!");
       markers.current.map((m) => {
         m.marker.map = _map.current;
       });
 
       return;
     }
-    console.log(markers.current);
-    console.log("marker initialize");
+
     markers.current = data.map((d, idx) => {
       const marker = {
         marker: new window.naver.maps.Marker({
@@ -120,17 +123,17 @@ export default function NaverMapProvider({ children, category }) {
 
       window.naver.maps.Event.addListener(marker.marker, "click", () => {
         navigate(`/${d.id}`);
-        _map.current.panTo(marker.marker.position, {
-          duration: 500,
-          easing: "linear",
-        });
+        // _map.current.panTo(marker.marker.position, {
+        //   duration: 500,
+        //   easing: "linear",
+        // });
 
-        if (clickedMarker.current) {
-          clickedMarker.current.setAnimation(0);
-          prevClickedMarker.current = clickedMarker.current;
-        }
-        clickedMarker.current = marker.marker;
-        clickedMarker.current.setAnimation(1);
+        // if (clickedMarker.current) {
+        //   clickedMarker.current.setAnimation(0);
+        //   prevClickedMarker.current = clickedMarker.current;
+        // }
+        // clickedMarker.current = marker.marker;
+        // clickedMarker.current.setAnimation(1);
       });
 
       return marker;
@@ -147,9 +150,7 @@ export default function NaverMapProvider({ children, category }) {
   };
 
   return (
-    <naverMapContext.Provider
-      value={{ ready, initMap, moveMap, initMarker, offAnimation }}
-    >
+    <naverMapContext.Provider value={{ ready, initMap, moveMap, initMarker }}>
       {children}
     </naverMapContext.Provider>
   );

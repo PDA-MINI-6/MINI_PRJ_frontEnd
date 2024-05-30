@@ -10,7 +10,7 @@ import "./popupSearch.css";
 const PopupSearchList = ({ sortOption, searchText, category, mylike }) => {
   const navigate = useNavigate();
   const [searchList, setSearchList] = useState([]);
-  const { initMarker, initMap, moveMap } = useContext(naverMapContext);
+  const { initMarker, initMap } = useContext(naverMapContext);
 
   useEffect(() => {
     axios
@@ -59,7 +59,6 @@ const PopupSearchList = ({ sortOption, searchText, category, mylike }) => {
             className="d-flex justify-content-between align-items-start"
             style={{ cursor: "pointer" }}
             onClick={() => {
-              moveMap(elem.id);
               navigate(`/${elem.id}`);
             }}
           >
