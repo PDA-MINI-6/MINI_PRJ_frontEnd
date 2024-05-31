@@ -52,7 +52,6 @@ export default function NaverMapProvider({ children, category }) {
   const initMap = useCallback((el) => {
     if (ready.current) return;
 
-    console.log("init map");
     ready.current = true;
     const map = new window.naver.maps.Map(document.getElementById("popUpMap"), {
       center: {
@@ -102,7 +101,6 @@ export default function NaverMapProvider({ children, category }) {
       window.naver.maps.Event.addListener(marker.marker, "click", () => {
         navigate(`/${d.id}`);
       });
-      console.debug(marker);
 
       return marker;
     });
